@@ -62,6 +62,7 @@
             this._addDefinition.TabIndex = 2;
             this._addDefinition.Text = "Neue Definition";
             this._addDefinition.UseVisualStyleBackColor = true;
+            this._addDefinition.Click += new System.EventHandler(this._addDefinition_Click);
             // 
             // _deleteDefinition
             // 
@@ -71,6 +72,7 @@
             this._deleteDefinition.TabIndex = 3;
             this._deleteDefinition.Text = "Definition entfernen";
             this._deleteDefinition.UseVisualStyleBackColor = true;
+            this._deleteDefinition.Click += new System.EventHandler(this._deleteDefinition_Click);
             // 
             // _addToChangeSeries
             // 
@@ -80,6 +82,7 @@
             this._addToChangeSeries.TabIndex = 4;
             this._addToChangeSeries.Text = "Änderung planen";
             this._addToChangeSeries.UseVisualStyleBackColor = true;
+            this._addToChangeSeries.Click += new System.EventHandler(this._addToChangeSeries_Click);
             // 
             // _definitionName
             // 
@@ -105,6 +108,7 @@
             this._undo.TabIndex = 7;
             this._undo.Text = "Undo";
             this._undo.UseVisualStyleBackColor = true;
+            this._undo.Click += new System.EventHandler(this._undo_Click);
             // 
             // _redo
             // 
@@ -114,6 +118,7 @@
             this._redo.TabIndex = 8;
             this._redo.Text = "Redo";
             this._redo.UseVisualStyleBackColor = true;
+            this._redo.Click += new System.EventHandler(this._redo_Click);
             // 
             // _clear
             // 
@@ -123,6 +128,7 @@
             this._clear.TabIndex = 9;
             this._clear.Text = "Clear";
             this._clear.UseVisualStyleBackColor = true;
+            this._clear.Click += new System.EventHandler(this._clear_Click);
             // 
             // Form1
             // 
@@ -143,12 +149,11 @@
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
 
-        private DocumentsDurationPanel documentsDurationPanel1;
+        private EditDefinition.DocumentsDurationPanel documentsDurationPanel1;
         private TimePeriodPanel timePeriodPanel1;
         private System.Windows.Forms.Button _addDefinition;
         private System.Windows.Forms.Button _deleteDefinition;

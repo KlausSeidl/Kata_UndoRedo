@@ -47,7 +47,7 @@
             // 
             // _begin
             // 
-            this._begin.CustomFormat = "dd.MM.yyyy hh:mm";
+            this._begin.CustomFormat = "dd.MM.yyyy HH:mm";
             this._begin.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this._begin.Location = new System.Drawing.Point(36, 3);
             this._begin.Name = "_begin";
@@ -56,7 +56,7 @@
             // 
             // _end
             // 
-            this._end.CustomFormat = "dd.MM.yyyy hh:mm";
+            this._end.CustomFormat = "dd.MM.yyyy HH:mm";
             this._end.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this._end.Location = new System.Drawing.Point(306, 4);
             this._end.Name = "_end";

@@ -46,6 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\AddNewDefinitionCommand.cs" />
+    <Compile Include="Commands\AddNewDefinitionToChangeSeriesCommand.cs" />
+    <Compile Include="Commands\RemoveCurrentDefinitionCommand.cs" />
+    <Compile Include="Commands\SetCurrentDocumentCommand.cs" />
+    <Compile Include="Commands\SetDefinitionBeginCommand.cs" />
+    <Compile Include="Commands\SetDefinitionEndCommand.cs" />
+    <Compile Include="Commands\SetDefinitionNameCommand.cs" />
     <Compile Include="DocumentsDurationPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,6 +107,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="Skc.BestPractices.CommandManager" Version="1.0.0" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
