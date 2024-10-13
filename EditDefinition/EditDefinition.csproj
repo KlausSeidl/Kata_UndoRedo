@@ -108,7 +108,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Skc.BestPractices.CommandManager" Version="1.0.0" />
+    <PackageReference Include="Skc.BestPractices.CommandManager" Version="1.0.2" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
