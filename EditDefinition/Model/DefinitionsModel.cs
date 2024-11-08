@@ -6,7 +6,7 @@ namespace EditDefinition.Model
     public class DefinitionsModel
     {
         private readonly IList<EditingDocument> _editingDocuments = new List<EditingDocument>();
-        public EditingDocument CurrentDocument { get; set; } = null;
+        public EditingDocument CurrentDocument { get; set; }
 
         public IList<EditingDocument> EditingDocuments => _editingDocuments;
 
