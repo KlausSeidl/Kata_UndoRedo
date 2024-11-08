@@ -14,6 +14,18 @@ namespace EditDefinition.Model
 
         public IList<EditingDocument> EditingDocuments => _editingDocuments;
 
+        public void AddEditingDocument(EditingDocument editingDocument)
+        {
+            _editingDocuments.Add(editingDocument);
+            CurrentDocument = editingDocument;
+        }
+
+        public void RemoveEditingDocument(Guid id)
+        {
+            _editingDocuments.Remove(_editingDocuments.SingleOrDefault(x => x.Definition.Id.Equals(id)));
+            CurrentDocument = null;
+        }
+        
         public void Clear()
         {
             _editingDocuments.Clear();

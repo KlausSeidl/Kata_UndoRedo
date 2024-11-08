@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EditDefinition.Model;
 
 namespace EditDefinition
 {
@@ -15,6 +16,12 @@ namespace EditDefinition
         public DocumentsDurationPanel()
         {
             InitializeComponent();
+        }
+
+        public void ShowDefinitions(object[] definitions)
+        {
+            _definitions.Items.Clear();
+            _definitions.Items.AddRange(definitions);
         }
     }
 }

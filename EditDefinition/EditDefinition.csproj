@@ -58,9 +58,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\CommandManager.cs" />
     <Compile Include="Model\Definition.cs" />
     <Compile Include="Model\DefinitionsModel.cs" />
     <Compile Include="Model\EditingDocument.cs" />
+    <Compile Include="Model\ICommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimePeriodPanel.cs">

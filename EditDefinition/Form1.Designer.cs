@@ -62,6 +62,7 @@
             this._addDefinition.TabIndex = 2;
             this._addDefinition.Text = "Neue Definition";
             this._addDefinition.UseVisualStyleBackColor = true;
+            this._addDefinition.Click += new System.EventHandler(this._addDefinition_Click);
             // 
             // _deleteDefinition
             // 
@@ -87,6 +88,7 @@
             this._definitionName.Name = "_definitionName";
             this._definitionName.Size = new System.Drawing.Size(100, 20);
             this._definitionName.TabIndex = 5;
+            this._definitionName.TextChanged += new System.EventHandler(this._definitionName_TextChanged);
             // 
             // label1
             // 
@@ -105,6 +107,7 @@
             this._undo.TabIndex = 7;
             this._undo.Text = "Undo";
             this._undo.UseVisualStyleBackColor = true;
+            this._undo.Click += new System.EventHandler(this._undo_Click);
             // 
             // _redo
             // 
@@ -114,6 +117,7 @@
             this._redo.TabIndex = 8;
             this._redo.Text = "Redo";
             this._redo.UseVisualStyleBackColor = true;
+            this._redo.Click += new System.EventHandler(this._redo_Click);
             // 
             // _clear
             // 
@@ -143,12 +147,11 @@
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
 
         #endregion
 
-        private DocumentsDurationPanel documentsDurationPanel1;
+        private EditDefinition.DocumentsDurationPanel documentsDurationPanel1;
         private TimePeriodPanel timePeriodPanel1;
         private System.Windows.Forms.Button _addDefinition;
         private System.Windows.Forms.Button _deleteDefinition;
