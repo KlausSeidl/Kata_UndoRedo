@@ -42,7 +42,7 @@ namespace EditDefinition.Model
 
         public void Redo()
         {
-            _definitionsModel.EditingDocuments.Add(_editingDocumentToWorkOn);
+            _definitionsModel.AddEditingDocument(_editingDocumentToWorkOn);
         }
     }
 }

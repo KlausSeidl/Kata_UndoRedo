@@ -19,20 +19,35 @@ namespace EditDefinition.Model
         {
             if (back)
             {
+                if (_firstCommandUndone)
+                {
+                    return;
+                }
                 _commands[_commandIndex].Undo();
                 _commandIndex--;
+                _lastCommandRedone = false;
                 if (_commandIndex < 0)
                 {
                     _commandIndex = 0;
+                    _firstCommandUndone = true;
                 }
             }
             else
             {
-                _commands[_commandIndex].Redo();
+                if (_lastCommandRedone)
+                {
+                    return;
+                }
                 _commandIndex++;
                 if (_commandIndex >= _commands.Count)
                 {
                     _commandIndex = _commands.Count - 1;
+                    _lastCommandRedone = true;
+                }
+                else
+                {
+                    _commands[_commandIndex].Redo();
+                    _firstCommandUndone = false;
                 }
             }
         }
