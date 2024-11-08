@@ -1,0 +1,161 @@
+﻿@page "/UndoRedo"
+@using KataUndoRedoImplDStahmer.Client.Model
+@using Skc.BestPractices.CommandManager
+
+<PageTitle>Medikation</PageTitle>
+<MudText Typo="Typo.h3" GutterBottom="true">Medikation</MudText>
+
+<div id="main">
+    <section id="left">
+        <MudTextField Value="SelectedDefinitionName" TextChanged="_onNameChange" Label="Name"
+                      class="d-inline-block" Variant="Variant.Outlined"></MudTextField>
+
+        <MudPaper Class="mt-4">
+            <MudList T="string" @bind-SelectedValue="SelectedDefinitionId"
+                     SelectionMode="SelectionMode.ToggleSelection">
+                @foreach (var def in _definitions)
+                {
+                    <MudListItem Value="@def.Id.ToString()" Icon="@Icons.Material.Outlined.Healing">
+                        @def.Name (@def.Begin.ToShortDateString() - @def.End.ToShortDateString())
+                    </MudListItem>
+                }
+            </MudList>
+        </MudPaper>
+        
+        <MudPaper Class="mt-4">
+            <div class="definition-datepicker">
+                <MudDatePicker Date="_selectedDefinition?.Begin" DateChanged='v => _onDateChange(v, "Begin")'
+                               Label="Begin" Variant="Variant.Outlined"/>
+                <MudButton @onclick='() => _onDateChange(_selectedDefinition?.Begin.AddDays(1), "Begin")'>+1</MudButton>
+            </div>
+            <div class="definition-datepicker">
+                <MudDatePicker Date="_selectedDefinition?.End" DateChanged='v => _onDateChange(v, "End")' Label="End"
+                               Variant="Variant.Outlined"/>
+                <MudButton @onclick='() => _onDateChange(_selectedDefinition?.End.AddDays(1), "End")'>+1</MudButton>
+            </div>
+        </MudPaper>
+    </section>
+
+    <section id="right">
+        <MudButtonGroup Vertical="true" Variant="Variant.Outlined">
+            <MudButton StartIcon="@Icons.Material.Outlined.Create" 
+                       @onclick="_onNewDefinition">Neue Definition</MudButton>
+            <MudButton StartIcon="@Icons.Material.Outlined.Delete" 
+                       @onclick="_onDefinitionDelete">Definition entfernen</MudButton>
+            <MudButton>Änderung planen</MudButton>
+        </MudButtonGroup>
+        <br/>
+        <MudButtonGroup Vertical="true" Variant="Variant.Outlined">
+            <MudButton StartIcon="@Icons.Material.Outlined.Undo" 
+                       Disabled="!CanUndo"
+                       @onclick="() => _commandManager.Undo()">Undo</MudButton>
+            <MudButton StartIcon="@Icons.Material.Outlined.Redo"
+                       Disabled="!CanRedo"
+                       @onclick="() => _commandManager.Redo()">Redo</MudButton>
+            <MudButton StartIcon="@Icons.Material.Outlined.DeleteForever" 
+                       @onclick="() => _commandManager.Clear()">Clear</MudButton>
+        </MudButtonGroup>
+    </section>
+</div>
+
+<style>
+    #main {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+    
+    #left, #right {
+        padding: 3em 3em 0 0;
+        max-width: 50%;
+        flex-grow: 1;
+    }
+    
+    #right > * {
+       margin-bottom: 2em; 
+    }
+    
+    .definition-datepicker {
+        display: inline-block;
+        .mud-picker {
+            max-width: 11em;
+            display: inline-block;
+        }
+    }
+</style>
+
+@code {
+    private CommandManager _commandManager = new ();
+    
+    private readonly List<Definition> _definitions = [
+        new Definition()
+        {
+            Name = "Definition 1", Begin = DateTime.Now, End = DateTime.Now.AddDays(1),
+        },
+        new Definition()
+        {
+            Name = "Definition 2", Begin = DateTime.Now.AddDays(1), End = DateTime.Now.AddDays(2),
+        },
+    ];
+    
+    private Definition? _selectedDefinition = null;
+
+    private string? SelectedDefinitionId
+    {
+        get => _selectedDefinition?.Id.ToString();
+        set => _selectedDefinition = _definitions.Find(def => def.Id.ToString() == value);
+    }
+
+    private string SelectedDefinitionName => _selectedDefinition?.Name.ToString() ?? "";
+
+    private void _onNameChange(string val)
+    {
+        if (
+            _selectedDefinition == null ||
+            _selectedDefinition.Name == val // without this, an undo would trigger another action itself
+        ) return;
+        _commandManager.Execute(new DefinitionChangedCommand(_selectedDefinition) { NewName = val });
+        Console.WriteLine(_commandManager.GetUndoCommands().Count);
+    }
+
+    private bool CanUndo => _commandManager.GetUndoCommands().Count != 0;
+    private bool CanRedo => _commandManager.GetRedoCommands().Count != 0;
+
+    private void _onDateChange(DateTime? val, string which)
+    {
+        if (_selectedDefinition == null) return;
+        if (val == null) return;
+        switch (which)
+        {
+            case "Begin" when _selectedDefinition.Begin != val:
+                _commandManager.Execute(new DefinitionChangedCommand(_selectedDefinition) { NewBeginDate = val });
+                break;
+            case "End" when _selectedDefinition.End != val:
+                _commandManager.Execute(new DefinitionChangedCommand(_selectedDefinition) { NewEndDate = val });
+                break;
+        }
+    }
+
+    private void _onDefinitionDelete()
+    {
+        if (_selectedDefinition == null) return;
+        var toDelete = _selectedDefinition;
+        _selectedDefinition = null;
+        _commandManager.Execute(new DefinitionDeleteCommand(_definitions, toDelete));
+    }
+    
+
+    protected override void OnInitialized()
+    {
+        _selectedDefinition = _definitions[0];
+    }
+    
+    private void _onNewDefinition()
+    {
+        _commandManager.Execute(new DefinitionNewCommand(_definitions, new Definition()
+        {
+            Name = "Neue Definition", Begin = DateTime.Now, End = DateTime.Now.AddDays(1),
+        }));
+    }
+
+}
